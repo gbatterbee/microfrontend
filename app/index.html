@@ -2,6 +2,38 @@
 
 <head>
   <script src="./htmlimport.js"></script>
+
+  <script type="text/javascript">
+    function loadNav() {
+      var imported = document.querySelector('#navLink').import;
+      var cloned = document.importNode(imported.querySelector('#nav-template'), true);
+      document.head.appendChild(cloned.content);
+    };
+
+    function loadHeader() {
+      var imported = document.querySelector('#headerLink').import;
+      var cloned = document.importNode(imported.querySelector('#header-template'), true);
+      document.head.appendChild(cloned.content);
+    };
+
+    function load(template) {
+      let link = document.createElement('link');
+      link.id = "thepage-"+template.toString();
+      link.rel = "import";
+      link.href = "http://127.0.0.1:8082/" + template;
+      link.addEventListener("load", ()=>importLink(template))
+      document.head.appendChild(link);
+    }
+
+    function importLink(t) {
+      var imported = document.getElementById("thepage-"+t).import;
+      var cloned = document.importNode(imported.querySelector('#page-template'), true);
+      if (document.querySelector('#main').children.length)
+        document.querySelector('#main').children[0].remove();
+      document.querySelector('#main').appendChild(cloned.content);
+    };
+  </script>
+
   <script type="text/javascript">
 
     function EventHub() {
@@ -21,33 +53,18 @@
       this.publish = (m) => {
         console.log(window.EventHub);
         console.log(subscribers);
-
+        if (m.type === 'navigate') {
+          load(m.value);
+        }
         subscribers.forEach(s => s.onReceive(m));
       };
     }
 
     window.EventHub = new EventHub();
   </script>
-  <script type="text/javascript">
-    function importLink() {
-      var imported = document.querySelector('#thepage').import;
-      var cloned = document.importNode(imported.querySelector('#page-template'), true);
-      document.querySelector('#main').appendChild(cloned.content);
-    };
 
-    function load() {
-      let link = document.createElement('link');
-      link.id = "thepage";
-      link.rel = "import";
-      link.href = "http://127.0.0.1:8082/list-content-layout.html";
-      link.addEventListener("load", importLink)
-      document.head.appendChild(link);
-    }
-        //https://gbui-dev-func.azurewebsites.net/page?name=app-config
-  </script>
 
-  <!-- <link rel="import" href="http://127.0.0.1:8081/list-content-layout.html" onload="loadPage()" id="thepage" /> -->
-  <!-- <link rel="import" href="https://gbui-dev-func.azurewebsites.net/page.html" onload="importLink()" id="thepage" /> -->
+
   <style>
     html {
       width: 100%;
@@ -88,16 +105,18 @@
       height: 100%;
     }
 
-    nav ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    div.nav-component {
+    .nav-component {
       padding: 0;
       margin: 0;
       background-color: red;
+      height: 100%;
+      width: 100%;
+    }
+
+    .header-component {
+      padding: 0;
+      margin: 0;
+      background-color: green;
       height: 100%;
       width: 100%;
     }
@@ -110,16 +129,15 @@
       background-color: lightgreen;
     }
   </style>
+  <link rel="import" href="http://127.0.0.1:8082/header-content-layout.html" onload="loadHeader()" id="headerLink" />
+  <link rel="import" href="http://127.0.0.1:8082/nav-content-layout.html" onload="loadNav()" id="navLink" />
 </head>
 
 <body>
-  <header>Welcome to my microfrontend app</header>
+  <header id="header-component">Default header</header>
   <div class="container">
-    <nav id="nav-component">
-     
-    </nav>
+    <nav id="nav-component">default nav</nav>
     <main id="main">
-      This is where we put our content
     </main>
   </div>
 </body>

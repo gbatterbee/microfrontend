@@ -48,7 +48,7 @@ export class TestHarness extends Component {
 export default class MessagingProvider extends Component {
     constructor() {
         super();
-        this.client = new EventHubClient(m=>this.receive(m));
+        this.client = new EventHubClient(m => this.receive(m));
         this.state = { message: null };
     }
 
@@ -65,39 +65,19 @@ export default class MessagingProvider extends Component {
         if (window.EventHub) {
             return (
                 <div>
-                {
-                    React.cloneElement(this.props.children, { message: this.state.message,onSend: (m) => this.client.publish(m) })}
-                <div>
-                    <TestHarness raiseEvent={e => this.client.publish(e)} message={this.state.message}/>
-                </div>
+                    {
+                        React.cloneElement(this.props.children, { message: this.state.message, onSend: (m) => this.client.publish(m) })
+                    }
                 </div>
             );
         }
         else {
             return (
-                React.cloneElement(this.props.children, { message: this.state.message,onSend: (m) => this.client.publish(m) })
+                React.cloneElement(this.props.children, { message: this.state.message, onSend: (m) => this.client.publish(m) })
             );
         }
     }
 }
 
-// function withMessaging(WrappedComponent) {
-//     return class extends React.Component {
-//         constructor(props) {
-//             super(props);
-//             this.client = new EventHubClient(message => this.setState(message));
-//             this.state = { message: null };
-//         }
-
-//         componentWillUnmount() {
-//             this.client.unsubscribe();
-//         }
-
-//         render() {
-//             return <WrappedComponent lastMessage={this.state.message} {...this.props} />;
-//         }
-//     };
-// }
-
-ReactDOM.render(<App />, document.getElementById('content-component'));
+ReactDOM.render(<MessagingProvider><App /></MessagingProvider>, document.getElementById('content-component'));
 

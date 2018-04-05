@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './content-component.css';
-import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 
 const items = [
   { id: 1, value: 'first element', secondValue: "this is the first element", detail: "this is detail 1" },
@@ -15,8 +12,6 @@ class App extends Component {
     super();
     this.state = { item: null }
   }
-  // componentDidMount = () =>
-  //   this.setState({ item: { id: 1, value: 'first element', secondValue: "some other bit of info", detail: "some detail" } });
 
   componentWillReceiveProps = (props) => {
     if (props.message.type === 'list-component-selected') {
@@ -24,26 +19,15 @@ class App extends Component {
     }
   }
 
-  // componentWillReceiveProps(props) {
-  //   if (props.message.type === 'list-component-selected')
-  //   //this.setState({ items: [...this.state.items, { id: this.state.items.length, value: props.message}]})
-  // }
   render() {
     return (
-      <div className="App" style={{height:"100%",width:"100%"}}>
-        <AutoSizer>
-          {({ width,height }) => (
-            <div
-              height={height}
-              width={width}
-            >
-              <img src={logo} className="App-logo" alt="logo" style={{ height: 30, width: 30 }} />
-              {this.state.item ? <p>You've selected something</p> : <p>You probably need to choose something from the list - if it exists</p>}
-              <Item item={this.state.item} />
-            </div>
-          )}
-
-        </AutoSizer>
+      <div className="App" style={{ height: "100%", width: "100%",backgroundColor:"orange" }}>
+        {
+          this.state.item ?
+            <p>You've selected something</p>
+            : <p>You probably need to choose something from the list - if it exists</p>
+        }
+        <Item item={this.state.item} />
       </div>
     );
   }
