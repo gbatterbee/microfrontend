@@ -1,57 +1,122 @@
 <html>
 
 <head>
-    <script src="./htmlimport.js"></script>
-    <script type="text/javascript">
+  <script src="./htmlimport.js"></script>
+  <script type="text/javascript">
 
-        function EventHub() {
-          let _self=this;
-          var subscribers = [];
-          
-          this.subscribe = function (o) {
-            if (subscribers.findIndex(v => o === v) > -1)
-              return;
-             subscribers.push(o);
-          };
-    
-          this.unsubscribe = (o) => {
-            subscribers = subscribers.filter(s => s !== 0);
-          };
-    
-          this.publish = (m) => {
-            console.log(window.EventHub);
-            console.log(subscribers);
-    
-            subscribers.forEach(s => s.onReceive(m));
-          };
-        }
-    
-        window.EventHub = new EventHub();
-      </script>
-    <script  type="text/javascript">
-        function importLink() {
-            var imported = document.querySelector('#thepage').import;
-            var cloned = document.importNode(imported.querySelector('#page-template'), true);
-            document.querySelector('#main').appendChild(cloned.content);
-        };
+    function EventHub() {
+      let _self = this;
+      var subscribers = [];
 
-        function load(){
-          let link = document.createElement('link');
-          link.id="thepage";
-          link.rel="import";
-          link.href="https://gbui-dev-func.azurewebsites.net/page?name=app-config";
-          link.addEventListener("load",importLink)
-          document.head.appendChild(link);
-        }
-    </script>
-    
-    <!-- <link rel="import" href="http://127.0.0.1:8081/list-content-layout.html" onload="loadPage()" id="thepage" /> -->
-    <!-- <link rel="import" href="https://gbui-dev-func.azurewebsites.net/page.html" onload="importLink()" id="thepage" /> -->
+      this.subscribe = function (o) {
+        if (subscribers.findIndex(v => o === v) > -1)
+          return;
+        subscribers.push(o);
+      };
+
+      this.unsubscribe = (o) => {
+        subscribers = subscribers.filter(s => s !== 0);
+      };
+
+      this.publish = (m) => {
+        console.log(window.EventHub);
+        console.log(subscribers);
+
+        subscribers.forEach(s => s.onReceive(m));
+      };
+    }
+
+    window.EventHub = new EventHub();
+  </script>
+  <script type="text/javascript">
+    function importLink() {
+      var imported = document.querySelector('#thepage').import;
+      var cloned = document.importNode(imported.querySelector('#page-template'), true);
+      document.querySelector('#main').appendChild(cloned.content);
+    };
+
+    function load() {
+      let link = document.createElement('link');
+      link.id = "thepage";
+      link.rel = "import";
+      link.href = "http://127.0.0.1:8082/list-content-layout.html";
+      link.addEventListener("load", importLink)
+      document.head.appendChild(link);
+    }
+        //https://gbui-dev-func.azurewebsites.net/page?name=app-config
+  </script>
+
+  <!-- <link rel="import" href="http://127.0.0.1:8081/list-content-layout.html" onload="loadPage()" id="thepage" /> -->
+  <!-- <link rel="import" href="https://gbui-dev-func.azurewebsites.net/page.html" onload="importLink()" id="thepage" /> -->
+  <style>
+    html {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background-color: lightblue;
+    }
+
+    main {
+      padding: 0;
+      margin: 0;
+      flex-grow: 1;
+      background-color: lightpink;
+    }
+
+    header {
+      height: 100px;
+      width: 100%;
+      background-color: yellow;
+    }
+
+    section {
+      flex-grow: 1;
+    }
+
+    nav {
+      padding: 0;
+      margin: 0;
+      background-color: lightcoral;
+      width: 100px;
+      height: 100%;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      flex-direction: row;
+      background-color: lightgreen;
+    }
+  </style>
 </head>
 
 <body>
-  <button onclick="load()">load</button>
-<main id="main"></main>
+  <header>header</header>
+  <div class="container">
+    <nav>
+      <ul>
+        <li>Single component</li>
+        <li>Twin components</li>
+      </ul>
+    </nav>
+    <main id="main">
+      This is where we put our content
+    </main>
+  </div>
 </body>
 
 </html>

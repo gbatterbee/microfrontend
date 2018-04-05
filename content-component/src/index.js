@@ -65,7 +65,8 @@ export default class MessagingProvider extends Component {
         if (window.EventHub) {
             return (
                 <div>
-                {React.cloneElement(this.props.children, { message: this.state.message,onSend: (m) => this.client.publish(m) })}
+                {
+                    React.cloneElement(this.props.children, { message: this.state.message,onSend: (m) => this.client.publish(m) })}
                 <div>
                     <TestHarness raiseEvent={e => this.client.publish(e)} message={this.state.message}/>
                 </div>
@@ -98,5 +99,5 @@ export default class MessagingProvider extends Component {
 //     };
 // }
 
-ReactDOM.render(<MessagingProvider><App /></MessagingProvider>, document.getElementById('content-component'));
+ReactDOM.render(<App />, document.getElementById('content-component'));
 
