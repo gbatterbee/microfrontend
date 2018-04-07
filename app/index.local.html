@@ -9,22 +9,19 @@
       var cloned = document.importNode(imported.querySelector('#nav-template'), true);
       document.head.appendChild(cloned.content);
     };
-
     function loadHeader() {
       var imported = document.querySelector('#headerLink').import;
       var cloned = document.importNode(imported.querySelector('#header-template'), true);
       document.head.appendChild(cloned.content);
     };
-
     function load(template) {
       let link = document.createElement('link');
       link.id = "thepage-"+template.toString();
       link.rel = "import";
-      link.href = "https://microfrontends.azureedge.net/templates/" + template +'.html';
+      link.href = "http://127.0.0.1:8081/" + template;
       link.addEventListener("load", ()=>importLink(template))
       document.head.appendChild(link);
     }
-
     function importLink(t) {
       var imported = document.getElementById("thepage-"+t).import;
       var cloned = document.importNode(imported.querySelector('#page-template'), true);
@@ -35,21 +32,17 @@
   </script>
 
   <script type="text/javascript">
-
     function EventHub() {
       let _self = this;
       var subscribers = [];
-
       this.subscribe = function (o) {
         if (subscribers.findIndex(v => o === v) > -1)
           return;
         subscribers.push(o);
       };
-
       this.unsubscribe = (o) => {
         subscribers = subscribers.filter(s => s !== 0);
       };
-
       this.publish = (m) => {
         console.log(window.EventHub);
         console.log(subscribers);
@@ -59,7 +52,6 @@
         subscribers.forEach(s => s.onReceive(m));
       };
     }
-
     window.EventHub = new EventHub();
   </script>
 
@@ -70,7 +62,6 @@
       width: 100%;
       height: 100%;
     }
-
     body {
       padding: 0;
       margin: 0;
@@ -79,24 +70,20 @@
       flex-direction: column;
       background-color: lightblue;
     }
-
     main {
       padding: 0;
       margin: 0;
       flex-grow: 1;
       background-color: lightpink;
     }
-
     header {
       height: 100px;
       width: 100%;
       background-color: yellow;
     }
-
     section {
       flex-grow: 1;
     }
-
     nav {
       padding: 0;
       margin: 0;
@@ -104,7 +91,6 @@
       width: 100px;
       height: 100%;
     }
-
     .nav-component {
       padding: 0;
       margin: 0;
@@ -112,7 +98,6 @@
       height: 100%;
       width: 100%;
     }
-
     .header-component {
       padding: 0;
       margin: 0;
@@ -120,7 +105,6 @@
       height: 100%;
       width: 100%;
     }
-
     .container {
       display: flex;
       width: 100%;
@@ -129,8 +113,8 @@
       background-color: lightgreen;
     }
   </style>
-  <link rel="import" href="https://microfrontends.azureedge.net/templates/header-content-layout.html" onload="loadHeader()" id="headerLink" />
-  <link rel="import" href="https://microfrontends.azureedge.net/templates/nav-content-layout.html" onload="loadNav()" id="navLink" />
+  <link rel="import" href="http://127.0.0.1:8081/header-content-layout.html" onload="loadHeader()" id="headerLink" />
+  <link rel="import" href="http://127.0.0.1:8081/nav-content-layout.html" onload="loadNav()" id="navLink" />
 </head>
 
 <body>
