@@ -4,29 +4,32 @@
   <script src="./htmlimport.js"></script>
 
   <script type="text/javascript">
-    function loadTemplate(templId, linkid) {
-      var imported = document.querySelector('#' + linkid).import;
-      var cloned = document.importNode(imported.querySelector('#' + templId), true);
+    function loadNav() {
+      var imported = document.querySelector('#navLink').import;
+      var cloned = document.importNode(imported.querySelector('#nav-template'), true);
+      document.head.appendChild(cloned.content);
+    };
+
+    function loadHeader() {
+      var imported = document.querySelector('#headerLink').import;
+      var cloned = document.importNode(imported.querySelector('#header-template'), true);
       document.head.appendChild(cloned.content);
     };
 
     function load(template) {
       let link = document.createElement('link');
-      link.id = "thepage-" + template.toString();
+      link.id = "thepage-"+template.toString();
       link.rel = "import";
-      link.href = `https://microfrontendpages.azureedge.net/?name=${template}&tmplid=page-template`;
-      link.addEventListener("load", () => importLink(template))
+      link.href = "https://microfrontends.azureedge.net/templates/" + template +'.html';
+      link.addEventListener("load", ()=>importLink(template))
       document.head.appendChild(link);
     }
 
     function importLink(t) {
-      var imported = document.getElementById("thepage-" + t).import;
+      var imported = document.getElementById("thepage-"+t).import;
       var cloned = document.importNode(imported.querySelector('#page-template'), true);
-
-      let main = document.querySelector('#main');
-      while (main.firstChild) {
-        main.removeChild(main.firstChild);
-      }
+      if (document.querySelector('#main').children.length)
+        document.querySelector('#main').children[0].remove();
       document.querySelector('#main').appendChild(cloned.content);
     };
   </script>
@@ -59,6 +62,8 @@
 
     window.EventHub = new EventHub();
   </script>
+
+
 
   <style>
     html {
@@ -124,10 +129,8 @@
       background-color: lightgreen;
     }
   </style>
-  <link rel="import" href="https://microfrontendpages.azureedge.net/?name=header&tmplid=header-template" onload="loadTemplate('header-template','headerLink')"
-    id="headerLink" />
-  <link rel="import" href="https://microfrontendpages.azureedge.net/?name=nav&tmplid=nav-template" onload="loadTemplate('nav-template','navLink')"
-    id="navLink" />
+  <link rel="import" href="https://microfrontends.azureedge.net/templates/header-content-layout.html" onload="loadHeader()" id="headerLink" />
+  <link rel="import" href="https://microfrontends.azureedge.net/templates/nav-content-layout.html" onload="loadNav()" id="navLink" />
 </head>
 
 <body>

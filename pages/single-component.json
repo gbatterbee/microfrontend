@@ -1,0 +1,9 @@
+{
+    "layout": "single.html",
+    "map": [
+        {
+            "template": "single-component",
+            "component": "single-component"
+        }
+    ]
+}

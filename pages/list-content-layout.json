@@ -1,0 +1,12 @@
+{
+    "layout": "split.html",
+    "map": [
+        {
+            "template": "left-component",
+            "component": "list-component"
+        },        {
+            "template": "right-component",
+            "component": "content-component"
+        }
+    ]
+}
