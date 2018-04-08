@@ -80,7 +80,7 @@ CORS for the Azure Function will need to be configured for * or the host applica
 
 4.	Set up the CDN for the Azure function.
 I also set up caching to cache every request including querystrings
- ![alt text](https://raw.githubusercontent.com/gbatterbee/microfrontend/master/screenshots/azurefunc.png)
+ ![alt text](https://raw.githubusercontent.com/gbatterbee/microfrontend/master/screenshots/funccdn.png)
 
 5.	Set up the CDN for the Blob storage
  ![alt text](https://raw.githubusercontent.com/gbatterbee/microfrontend/master/screenshots/blobcdn.png)
