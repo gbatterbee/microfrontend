@@ -9,7 +9,7 @@ Demo App
 https://microfrontends.blob.core.windows.net/app/index.html#
 
 # Repository
-Folder | Descriptionb
+Folder | Description
 --- | --- 
 app|Application host.
 header-component|Header component set up with Create React App
